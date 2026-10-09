@@ -1,0 +1,3 @@
+import { apiError, checkOrigin, HttpError, requireFamily } from "@/lib/supabase/server";
+import { stripeClient, appUrl } from "@/lib/stripe/client";
+export async function POST(request: Request) { try { checkOrigin(request); const { family } = await requireFamily(true); if (!family.stripe_customer_id) throw new HttpError(400, "Your family doesn’t have a billing account yet."); const session = await stripeClient().billingPortal.sessions.create({ customer: family.stripe_customer_id, return_url: `${appUrl()}/dashboard/settings` }); return Response.json({ url: session.url }); } catch (error) { return apiError(error); } }
