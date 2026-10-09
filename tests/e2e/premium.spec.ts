@@ -2,8 +2,8 @@ import { test, expect } from "@playwright/test";
 test("demo premium enables a voice upload and illustrated PDF export", async ({ page }) => {
   await page.goto("/dashboard/settings");
   await page.getByRole("button", { name: "Preview Premium", exact: true }).click();
-  await expect(page.locator(".profile-button")).toContainText("Family Premium");
-  await page.getByRole("link", { name: "Family canvas", exact: true }).click();
+  await expect(page.locator(".plan-summary")).toContainText("Family Premium");
+  await page.getByRole("link", { name: "Canvas", exact: true }).click();
   await expect(page.getByRole("heading", { name: "Our family canvas" })).toBeVisible();
   // A valid one-second mono WAV recording, created in memory.
   const wav = Buffer.alloc(16044); wav.write("RIFF",0); wav.writeUInt32LE(16036,4); wav.write("WAVE",8); wav.write("fmt ",12); wav.writeUInt32LE(16,16); wav.writeUInt16LE(1,20); wav.writeUInt16LE(1,22); wav.writeUInt32LE(8000,24); wav.writeUInt32LE(16000,28); wav.writeUInt16LE(2,32); wav.writeUInt16LE(16,34); wav.write("data",36); wav.writeUInt32LE(16000,40);

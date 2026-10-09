@@ -33,7 +33,7 @@ Copy `.env.example` to `.env.local` and fill in the values. Never commit real se
 1. Create a fresh Supabase project.
 2. Apply `supabase/migrations/001_famcanvas.sql` in its SQL editor, or use Supabase CLI migrations.
 3. Set `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, and server-only `SUPABASE_SERVICE_ROLE_KEY`.
-4. Enable email magic-link sign-in. Set the Auth Site URL to your app URL. Allow `http://localhost:3000/auth/callback` during development and your production `/auth/callback` URL in production.
+4. Enable email/password and magic-link sign-in. `/login` supports both login and account creation; enable email confirmation for new accounts. Set the Auth Site URL to your app URL. Allow `http://localhost:3000/auth/callback` during development and your production `/auth/callback` URL in production.
 5. Configure production SMTP for reliable Auth emails.
 6. The migration creates the private `family-media` bucket and adds canvas items, storybooks, families, and users to the Realtime publication.
 
@@ -85,6 +85,7 @@ The MVP delivers email notifications; `push_token` is reserved for a future Web 
 
 | Route | Purpose |
 | --- | --- |
+| `/login` | Email/password and magic-link login or family account creation |
 | `/`, `/dashboard/canvas` | Shared canvas and immediate demo |
 | `/dashboard/albums` | Saved AI storybooks |
 | `/dashboard/family` | Members, invitations, and joining |
@@ -119,7 +120,7 @@ tests/                 Browser workflows, database rules and timezone tests
 
 The board uses accessible DOM cards for photos, notes, stickers, and audio, with pointer-based dragging and persisted coordinates. Fabric.js provides the drawing surface; finished drawings become shared high-resolution image memories. Supabase Realtime refreshes family-scoped state, including deletion events. Media signatures are renewed every 30 minutes. The canvas has a zoom toolbar, filters, uploads, lightboxes, and responsive layout.
 
-PDF exports include vector text and available photo originals. Microphone recording requires HTTPS (or localhost) and explicit browser permission. Files are limited to 10 MB, and the recording UI limits voice notes to two minutes.
+All plans can download a standalone HTML story album with chapter text. Premium PDF exports include vector text and available photo originals. Microphone recording requires HTTPS (or localhost) and explicit browser permission. Files are limited to 10 MB, and the recording UI limits voice notes to two minutes.
 
 ## Verification
 

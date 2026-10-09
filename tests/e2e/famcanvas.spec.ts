@@ -36,13 +36,13 @@ test("drawing pad exports a real memory", async ({ page }) => {
 });
 test("pricing and responsive canvas", async ({ page }) => {
   await page.goto("/pricing");
-  await expect(page.getByRole("heading", { name: "Family Premium", exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Family Premium Pass", exact: true })).toBeVisible();
   await expect(page.locator(".premium-price .price")).toContainText("6.99");
   await page.getByRole("button", { name: "Yearly Save 30%" }).click();
   await expect(page.locator(".premium-price .price")).toContainText("59");
-  await page.getByRole("button", { name: "Make room for more" }).click();
-  await expect(page.getByRole("dialog")).toContainText("Sign in with a secure email link");
-  await page.getByRole("button", { name: "Close dialog" }).click();
+  await page.getByRole("button", { name: "Choose Family Premium" }).click();
+  await expect(page).toHaveURL(/\/login$/);
+  await expect(page.getByRole("heading", { name: "Welcome home." })).toBeVisible();
   await page.goto("/"); await page.screenshot({ path: "test-results/canvas-desktop.png", fullPage: true });
   await page.setViewportSize({ width: 390, height: 844 });
   await expect(page.getByRole("heading", { name: "Our family canvas" })).toBeVisible();
